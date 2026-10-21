@@ -1,0 +1,12 @@
+[
+  {
+    "id": "hustle-hq",
+    "name": "Hustle HQ",
+    "desc": "Přehled všech našich byznysů, nápadů a úkolů na jednom místě.",
+    "url": "",
+    "logo": "logo.svg",
+    "mobile": "mobil.png",
+    "desktop": "pc.png",
+    "video": "video.mp4"
+  }
+]

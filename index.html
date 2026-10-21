@@ -1,152 +1,16 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Ralex S.R.O</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="theme-color" content="#0C0D11">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
-<style>
-/* Layout: Hustle HQ family — big wordmark header, then a home-screen grid of app icons; tap opens, long-press opens the edit sheet */
-:root {
-  --bg: #F3F4F7;
-  --bg-glow: rgba(91, 75, 255, 0.10);
-  --surface: #FFFFFF;
-  --surface-2: #EEF0F4;
-  --ink: #0D0F14;
-  --ink-inv: #FFFFFF;
-  --muted: #646B78;
-  --line: rgba(13, 15, 20, 0.08);
-  --line-2: rgba(13, 15, 20, 0.15);
-  --accent: #5B4BFF;
-  --accent-soft: rgba(91, 75, 255, 0.12);
-  --accent-ink: #FFFFFF;
-  --idea: #CA8A04; --dev: #5B4BFF;
-  --danger: #DC2626;
-  --shadow: 0 1px 2px rgba(13, 15, 20, 0.04), 0 8px 24px -12px rgba(13, 15, 20, 0.12);
-  --shadow-lg: 0 24px 60px -20px rgba(13, 15, 20, 0.28);
-  --glass: rgba(255, 255, 255, 0.72);
-  --scrim: rgba(13, 15, 20, 0.32);
-  --f-display: "Unbounded", "Segoe UI", system-ui, sans-serif;
-  --f-body: "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --f-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-}
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg: #0C0D11; --bg-glow: rgba(124, 110, 255, 0.16); --surface: #15171D; --surface-2: #1C1F26; --ink: #F3F4F6; --ink-inv: #0C0D11; --muted: #959BA8;
-  --line: rgba(255, 255, 255, 0.07); --line-2: rgba(255, 255, 255, 0.14); --accent: #8C80FF; --accent-soft: rgba(140, 128, 255, 0.16); --accent-ink: #0C0D11;
-  --idea: #FACC15; --dev: #8C80FF; --danger: #F87171;
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px -14px rgba(0, 0, 0, 0.6); --shadow-lg: 0 30px 70px -20px rgba(0, 0, 0, 0.7);
-  --glass: rgba(21, 23, 29, 0.72); --scrim: rgba(0, 0, 0, 0.55); color-scheme: dark } }
-:root[data-theme="dark"] {
-  --bg: #0C0D11; --bg-glow: rgba(124, 110, 255, 0.16); --surface: #15171D; --surface-2: #1C1F26; --ink: #F3F4F6; --ink-inv: #0C0D11; --muted: #959BA8;
-  --line: rgba(255, 255, 255, 0.07); --line-2: rgba(255, 255, 255, 0.14); --accent: #8C80FF; --accent-soft: rgba(140, 128, 255, 0.16); --accent-ink: #0C0D11;
-  --idea: #FACC15; --dev: #8C80FF; --danger: #F87171;
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px -14px rgba(0, 0, 0, 0.6); --shadow-lg: 0 30px 70px -20px rgba(0, 0, 0, 0.7);
-  --glass: rgba(21, 23, 29, 0.72); --scrim: rgba(0, 0, 0, 0.55); color-scheme: dark }
-
-* { box-sizing: border-box }
-html { -webkit-font-smoothing: antialiased }
-body { background: var(--bg); background-image: radial-gradient(60rem 28rem at 15% -8rem, var(--bg-glow), transparent 70%); background-repeat: no-repeat;
-  color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.5; min-height: 100vh }
-.wrap { max-width: 1180px; margin: 0 auto; padding-block: 48px 80px;
-  padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)) }
-@media (max-width: 560px) { .wrap { padding-block: 28px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) } }
-
-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 36px }
-.brand { display: grid; gap: 10px; min-width: 0 }
-.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); font-weight: 500 }
-.eyebrow i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft) }
-h1 { font-family: var(--f-display); font-weight: 700; font-size: clamp(40px, 8vw, 76px); line-height: .95; letter-spacing: -.035em; margin: 0; text-wrap: balance }
-h1 em { font-style: normal; color: var(--accent) }
-.brand p { margin: 0; color: var(--muted); max-width: 52ch; font-size: 16px }
-.how { position: relative; max-width: 100% }
-.how summary { list-style: none; display: flex; align-items: center; gap: 8px; cursor: pointer; background: var(--surface); border: 1px solid var(--line-2);
-  border-radius: 999px; padding: 6px 16px 6px 6px; font: 500 14px var(--f-body); color: var(--ink); user-select: none; box-shadow: var(--shadow) }
-.how summary:hover { border-color: var(--ink) }
-.how summary::-webkit-details-marker { display: none }
-.how .info { width: 30px; height: 30px; flex: none }
-.how .x { display: none; font-size: 20px; line-height: 1; color: var(--muted); margin-left: 4px }
-.how[open] .x { display: inline }
-.how ul { position: absolute; z-index: 15; top: calc(100% + 8px); right: 0; width: max-content; max-width: min(380px, calc(100vw - 32px));
-  list-style: none; margin: 0; padding: 18px 20px; display: grid; gap: 10px; font-size: 14.5px; color: var(--ink);
-  background: var(--surface); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow-lg) }
-@media (max-width: 560px) { .how ul { right: auto; left: 0 } }
-@media (prefers-reduced-motion: no-preference) { .how[open] ul { animation: drop .16s ease-out } @keyframes drop { from { opacity: 0; transform: translateY(-6px) } } }
-.how li.sep { border-top: 1px dashed var(--line-2); padding-top: 12px; margin-top: 2px }
-.how li b { font-weight: 600 }
-.how li { line-height: 1.4 }
-.how li i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; vertical-align: -1px }
-.how i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; vertical-align: 0 }
-.note { font-size: 13px; color: var(--muted); margin: -14px 0 20px }
-
-.home { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 28px 20px }
-@media (max-width: 520px) { .home { grid-template-columns: 1fr 1fr; gap: 22px 14px } }
-.tile { display: flex; flex-direction: column; align-items: stretch; gap: 10px; width: 100%; min-width: 0; text-decoration: none; color: var(--ink);
-  -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; touch-action: manipulation; cursor: pointer; border-radius: 22px; padding: 4px 0; background: none; border: 0; font: inherit }
-.icon { position: relative; width: 100%; aspect-ratio: 1; max-width: 100%; border-radius: 22px; overflow: hidden; border: 1px solid var(--line);
-  box-shadow: var(--shadow); transition: transform .2s ease, box-shadow .2s ease;
-  display: grid; place-items: center; font-family: var(--f-display); font-weight: 700; font-size: clamp(36px, 10vw, 64px); color: #fff; letter-spacing: -.03em }
-.icon img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none }
-.tile:hover .icon { transform: translateY(-3px); box-shadow: var(--shadow-lg) }
-.tile.pressing .icon { transform: scale(.95); transition: transform .5s cubic-bezier(.2,.7,.2,1) }
-.dot { position: absolute; top: 12px; right: 12px; width: 16px; height: 16px; border-radius: 50%; border: 3px solid rgb(255 255 255 / .92) }
-.label { font-family: var(--f-display); font-size: clamp(13px, 3.2vw, 17px); font-weight: 700; letter-spacing: -.03em; line-height: 1.2; text-align: center; padding: 0 4px; max-width: 100%; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow-wrap: anywhere }
-.add .icon { background: transparent; box-shadow: none; border: 1.5px dashed var(--line-2); color: var(--muted); font-weight: 500; transition: border-color .2s, color .2s, background-color .2s }
-.add:hover .icon { box-shadow: none; transform: none; border-color: var(--accent); color: var(--accent); background: var(--accent-soft) }
-.add .label { color: var(--muted); font-family: var(--f-body); font-weight: 500; letter-spacing: 0 }
-.gen::after { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / .45) 50%, transparent 70%); background-size: 250% 100%; animation: sheen 1.3s linear infinite }
-.gen-label { font: 12px var(--f-mono); color: var(--muted); text-align: center; margin-top: -4px }
-@keyframes sheen { from { background-position: 120% 0 } to { background-position: -120% 0 } }
-.empty { grid-column: 1 / -1; text-align: center; color: var(--muted); padding: 10px 0 0; max-width: 34ch; justify-self: center }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px }
-
-/* app inside Appkárna */
-.appview { position: fixed; inset: 0; z-index: 40; background: var(--bg); display: flex; flex-direction: column }
-.avbar { display: flex; align-items: center; gap: 12px; background: var(--glass); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); border-bottom: 1px solid var(--line);
-  padding: calc(8px + env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) 8px max(12px, env(safe-area-inset-left, 0px)) }
-#avBack { font: 500 14px var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--line-2); border-radius: 999px; padding: 8px 16px; cursor: pointer; flex: none }
-#avBack:hover { border-color: var(--ink) }
-#avTitle { font-family: var(--f-display); font-weight: 700; letter-spacing: -.02em; font-size: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0 }
-.appview iframe { flex: 1; width: 100%; min-height: 0; border: 0; background: var(--bg); display: block }
-
-/* sheet */
-.scrim { position: fixed; inset: 0; background: var(--scrim); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 20 }
-.panel { position: fixed; z-index: 21; top: 0; right: 0; bottom: 0; width: min(460px, 100%); background: var(--surface); border-left: 1px solid var(--line); border-radius: 26px 0 0 26px; box-shadow: var(--shadow-lg);
-  padding: calc(22px + env(safe-area-inset-top, 0px)) max(20px, env(safe-area-inset-right, 0px)) calc(22px + env(safe-area-inset-bottom, 0px)) 20px;
-  overflow-y: auto; display: flex; flex-direction: column; gap: 14px }
-.panel h2 { font-family: var(--f-display); font-size: 22px; font-weight: 700; margin: 0; letter-spacing: -.03em }
-.panel label { display: grid; gap: 7px; font-size: 12px; letter-spacing: .02em; color: var(--muted); font-weight: 500 }
-.panel small { font-weight: 400; color: var(--muted) }
-input, textarea, select { font: 15px var(--f-body); color: var(--ink); background: var(--surface-2); border: 1px solid transparent; border-radius: 12px; padding: 11px 13px; width: 100%; transition: border-color .15s, background-color .15s, box-shadow .15s }
-input:hover, textarea:hover { border-color: var(--line-2) }
-input:focus, textarea:focus { outline: none; border-color: var(--accent); background: var(--surface); box-shadow: 0 0 0 4px var(--accent-soft) }
-textarea { min-height: 76px; resize: vertical }
-.btn { font: 500 14px var(--f-body); border-radius: 999px; padding: 10px 18px; cursor: pointer; border: 1px solid var(--line-2); transition: transform .15s ease, background-color .15s ease, border-color .15s ease }
-.btn:active { transform: scale(.97) }
-.btn-primary { background: var(--ink); color: var(--ink-inv); border-color: var(--ink) }
-.btn-primary:hover { background: color-mix(in srgb, var(--ink) 86%, var(--accent)) }
-.btn-ghost { background: transparent; color: var(--ink); border-color: transparent }
-.btn-ghost:hover { background: var(--surface-2) }
-.btn-sm { font-size: 13px; padding: 8px 14px }
-.btn:disabled { opacity: .5; cursor: not-allowed }
-.logoBox { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 14px; align-items: center; padding: 14px; border: 1px solid var(--line); border-radius: 22px; background: var(--surface-2) }
-.logoBox .icon { width: 96px; border-radius: 22px; font-size: 30px }
-.logoBox .acts { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; min-width: 0 }
-.logoBox .upl { display: inline-flex; font: 500 13px var(--f-body); color: var(--ink); letter-spacing: 0; padding: 8px 14px; border: 1px solid var(--line-2); border-radius: 999px; cursor: pointer; background: var(--surface) }
-.logoBox .upl:focus-within { outline: 2px solid var(--accent); outline-offset: 2px }
-.linkbtn { background: none; border: 0; color: var(--muted); font: 500 12px var(--f-body); cursor: pointer; padding: 0; text-decoration: underline }
-.genmsg { font-size: 12px; color: var(--muted); margin: 0 }
-.hint { font-size: 13px; margin: -6px 0 0; padding: 10px 13px; border-radius: 12px; background: var(--accent-soft); color: var(--ink) }
-.panel small { color: var(--muted); letter-spacing: 0 }
-.err { color: var(--danger); font-size: 13px; margin: 0 }
-.foot { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 8px; align-items: center }
-.foot .del { margin-left: auto; background: none; border: 1px solid transparent; color: var(--danger); font: 500 13px var(--f-body); padding: 8px 14px; border-radius: 999px; cursor: pointer }
-.foot .del:hover { background: var(--surface-2) }
-.foot .del.armed { color: var(--danger); border-color: var(--danger) }
-.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px }
-@media (max-width: 420px) { .row2 { grid-template-columns: 1fr } }
-@media (max-width: 560px) { .panel { border-radius: 0 } }
-@media (prefers-reduced-motion: no-preference) { .panel { animation: slide .18s ease-out } @keyframes slide { from { transform: translateX(24px); opacity: .6 } } }
-@media (prefers-reduced-motion: reduce) { .gen::after { animation: none } .tile.pressing .icon, .icon { transition: none } }
-</style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
 
 <div class="wrap">
   <header>
@@ -155,290 +19,99 @@ textarea { min-height: 76px; resize: vertical }
       <h1>Ralex <em>S.R.O</em></h1>
       <p>Všechny appky, co jsme postavili, na jednom místě.</p>
     </div>
-    <details class="how" id="how">
-      <summary aria-label="Jak to funguje"><svg class="info" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="var(--accent)"/><rect x="9" y="8.5" width="2" height="6.5" rx="1" fill="var(--accent-ink)"/><circle cx="10" cy="5.8" r="1.25" fill="var(--accent-ink)"/></svg><span class="sumtxt">Jak to funguje</span><span class="x" aria-hidden="true">×</span></summary>
+    <details class="how">
+      <summary aria-label="Jak to funguje"><svg class="info" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="var(--accent)"/><rect x="9" y="8.5" width="2" height="6.5" rx="1" fill="var(--accent-ink)"/><circle cx="10" cy="5.8" r="1.25" fill="var(--accent-ink)"/></svg><span>Jak to funguje</span><span class="x" aria-hidden="true">×</span></summary>
       <ul>
-        <li><b>Klik</b> — spuštění aplikace</li>
-        <li><b>Podržení</b> — správa aplikace</li>
-        <li class="sep"><b>Provoz:</b> aplikace běží uvnitř Appkárny nad sdílenými daty týmu.</li>
-        <li><b>Originál:</b> samostatná aplikace v Claudovi autora, ze které kopie v Appkárně vzniká. Má vlastní data a s Appkárnou není propojená.</li>
-        <li><b>Vývoj:</b> originál slouží jako testovací prostředí, tým ho nevidí.</li>
-        <li><b>Nasazení:</b> pokyn Claudovi „pošli [název] do Appkárny“.</li>
-        <li><b>Data:</b> z originálu se nepřenášejí.</li>
-        <li><b>Tlačítko +:</b> přidá pouze externí odkaz.</li>
+        <li><b>Klik na appku</b> — otevře její stránku: mobil, PC a video z praxe.</li>
+        <li><b>Tlačítko +</b> — vyplníš appku a stránka ti vygeneruje řádek do <code>apps.json</code>.</li>
+        <li class="sep"><b>Soubory:</b> do složky <code>apps/název/</code> nahraj <code>logo.png</code>, <code>mobil.png</code>, <code>pc.png</code> a <code>video.mp4</code>.</li>
+        <li><b>Video:</b> MP4 do 100 MB, nebo odkaz na YouTube.</li>
+        <li><b>Změny:</b> po commitu na GitHub se web aktualizuje do minuty.</li>
       </ul>
     </details>
   </header>
-  <p class="note" id="note" hidden></p>
   <div class="home" id="home"><p class="empty">Načítám appky…</p></div>
-</div>
-
-<div class="appview" id="appView" hidden>
-  <div class="avbar"><button type="button" id="avBack">← Appkárna</button><span id="avTitle"></span></div>
-  <iframe id="avFrame" title="Appka"></iframe>
 </div>
 
 <div class="scrim" id="scrim" hidden></div>
 <form class="panel" id="panel" hidden autocomplete="off">
-  <h2 id="pTitle">Nová appka</h2>
-
-  <div class="logoBox">
-    <div class="icon" id="logoPrev"></div>
-    <div class="acts">
-      <button type="button" class="btn btn-primary btn-sm" id="genBtn">Nakreslit logo od Clauda</button>
-      <label class="upl" for="fLogo" id="uplBtn">Nahrát vlastní<input type="file" id="fLogo" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml" hidden></label>
-      <button type="button" class="linkbtn" id="logoRm" hidden>Odebrat logo</button>
-      <p class="genmsg" id="genMsg" hidden></p>
-    </div>
-  </div>
-  <label for="fIdea">Představa loga <small>nepovinné, třeba „zlatý blesk na černé“</small><input id="fIdea" maxlength="160"></label>
-
-  <label for="fName">Název<input id="fName" required maxlength="40" placeholder="Např. NoP trenažér"></label>
-  <p class="hint" id="fCopyHint" hidden>Tahle appka je kopie uvnitř Appkárny. Novou verzi sem pošle Claude, když mu napíšeš „pošli ji do Appkárny“.</p>
-  <label for="fUrl" id="fUrlWrap">Odkaz na appku <small>v Claudovi: Share → zkopírovat odkaz</small><input id="fUrl" type="url" placeholder="https://claude.ai/artifact/…"></label>
-  <p class="hint" id="fShareHint" hidden>Druhý appku otevře, jen když mu ji v Claudovi nasdílíš přes Share.</p>
-  <label for="fDesc">Co to dělá <small>Claude podle toho kreslí logo</small><textarea id="fDesc" maxlength="300" placeholder="Pro koho to je a co to řeší."></textarea></label>
+  <h2>Nová appka</h2>
+  <label for="fName">Název<input id="fName" required maxlength="40" placeholder="Např. Hustle HQ"></label>
+  <label for="fId">Složka <small>malá písmena a pomlčky, vyplní se samo</small><input id="fId" maxlength="40" pattern="[a-z0-9-]+" placeholder="hustle-hq"></label>
+  <label for="fUrl">Odkaz na appku <small>kam vede tlačítko „Otevřít appku“</small><input id="fUrl" type="url" placeholder="https://…"></label>
+  <label for="fDesc">Co to dělá<textarea id="fDesc" maxlength="300" placeholder="Pro koho to je a co to řeší."></textarea></label>
+  <label for="fVideo">Video <small>nech prázdné = video.mp4 ve složce, nebo vlož YouTube odkaz</small><input id="fVideo" placeholder="video.mp4"></label>
   <p class="err" id="fErr" hidden></p>
+  <div id="result" hidden style="display:grid;gap:12px">
+    <p class="hint"><b>1.</b> Tenhle blok vlož do <code>apps.json</code> (mezi <code>[ ]</code>, odděl čárkou od ostatních):</p>
+    <pre class="out" id="outJson"></pre>
+    <p class="hint" id="outFiles"></p>
+  </div>
   <div class="foot">
-    <button type="submit" class="btn btn-primary" id="fSave">Uložit</button>
+    <button type="submit" class="btn btn-primary" id="fGen">Vygenerovat</button>
+    <button type="button" class="btn" id="fCopy" hidden>Zkopírovat</button>
     <button type="button" class="btn btn-ghost" id="fCancel">Zavřít</button>
-    <button type="button" class="del" id="fDel" hidden>Smazat</button>
   </div>
 </form>
 
 <script>
 (() => {
   const $ = s => document.querySelector(s);
-  let db = null, user = null, assets = null, sample = null, canSample = true, canWrite = true;
-  let apps = [], editId = null, editApp = null, form = { logo: "", logoSvg: "" }, fresh = new Set(), busy = 0, armed = false;
-  const generating = new Set();
-
   const hue = s => { let h = 0; for (const c of s) h = (h * 31 + c.codePointAt(0)) % 360; return h };
   const initials = n => (n || "").trim().split(/\s+/).slice(0, 2).map(w => w[0]).join("").toUpperCase() || "?";
-  const safeUrl = u => { try { const x = new URL(u); return /^https?:$/.test(x.protocol) ? x.href : "" } catch { return "" } };
-  const isClaude = u => /(^|\.)claude\.ai\/(code\/)?artifact\//.test((u || "").replace(/^https?:\/\//, ""));
-  const pageOf = a => /^apps\/[a-z0-9-]+\/index\.html$/.test(a?.page || "") ? a.page : "";
-  const svgUri = s => "data:image/svg+xml;charset=utf-8," + encodeURIComponent(s);
-  function note(msg) { const n = $("#note"); n.textContent = msg || ""; n.hidden = !msg }
+  const slug = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
-  /* fill an .icon element: uploaded logo > Claude SVG > initials */
-  function paintIcon(box, a, f) {
-    const logo = f ? f.logo : a.logo, svg = f ? f.logoSvg : a.logoSvg, name = f ? $("#fName").value : a.name;
-    box.replaceChildren(); box.style.background = "";
-    const fallback = () => { box.replaceChildren(); box.style.background = `linear-gradient(145deg, oklch(0.66 0.16 ${hue(name || "?")}), oklch(0.46 0.15 ${(hue(name || "?") + 40) % 360}))`; box.append(initials(name)) };
-    const s = logo ? "/_blob/" + logo : svg ? svgUri(svg) : "";
-    if (!s) return fallback();
-    const im = new Image(); im.alt = ""; im.draggable = false; im.src = s; im.onerror = fallback; box.append(im);
+  function paintIcon(box, a) {
+    const fallback = () => { box.replaceChildren(initials(a.name)); box.style.background = `linear-gradient(145deg, oklch(0.66 0.16 ${hue(a.name)}), oklch(0.46 0.15 ${(hue(a.name) + 40) % 360}))` };
+    const src = a.logo ? `apps/${a.id}/${a.logo}` : "";
+    if (!src) return fallback();
+    const im = new Image(); im.alt = ""; im.src = src; im.onerror = fallback; box.replaceChildren(im);
   }
 
-  /* ---------- home screen ---------- */
-  function render() {
-    const home = $("#home");
-    if (!db) { home.innerHTML = '<p class="empty">Appkárna se nepřipojila. Otevři ji přihlášený v Claudovi.</p>'; return }
-    home.replaceChildren();
-    for (const a of apps) home.append(tile(a));
-    if (canWrite) {
-      const add = document.createElement("button"); add.type = "button"; add.className = "tile add";
-      add.innerHTML = '<div class="icon">+</div><span class="label">Přidat appku</span>';
-      add.onclick = () => openPanel(null); home.append(add);
+  function render(apps) {
+    const home = $("#home"); home.replaceChildren();
+    for (const a of apps) {
+      const el = document.createElement("a"); el.className = "tile"; el.href = "app.html?id=" + encodeURIComponent(a.id); el.title = a.desc || a.name;
+      const icon = document.createElement("div"); icon.className = "icon"; paintIcon(icon, a);
+      const lab = document.createElement("span"); lab.className = "label"; lab.textContent = a.name;
+      el.append(icon, lab); home.append(el);
     }
-    if (!apps.length) { const p = document.createElement("p"); p.className = "empty"; p.textContent = canWrite ? "Zatím prázdno. Přidej první appku a Claude jí nakreslí logo." : "Zatím tu nejsou žádné appky."; home.append(p) }
+    const add = document.createElement("button"); add.type = "button"; add.className = "tile add";
+    add.innerHTML = '<div class="icon">+</div><span class="label">Přidat appku</span>';
+    add.onclick = openPanel; home.append(add);
   }
 
-  function tile(a) {
-    const page = pageOf(a);
-    const href = page || safeUrl(a.url || "");
-    const el = document.createElement("a"); el.className = "tile";
-    if (page) el.href = page;
-    else if (href) { el.href = href; el.target = "_blank"; el.rel = "noopener" } else { el.href = "#"; el.setAttribute("role", "button") }
-    el.title = a.desc || a.name;
-    const icon = document.createElement("div"); icon.className = "icon"; paintIcon(icon, a);
-    if (generating.has(a.id)) icon.classList.add("gen");
-    const lab = document.createElement("span"); lab.className = "label"; lab.textContent = a.name;
-    el.append(icon, lab);
-    if (generating.has(a.id)) { const g = document.createElement("span"); g.className = "gen-label"; g.textContent = "Claude kreslí…"; el.append(g) }
+  fetch("apps.json", { cache: "no-store" })
+    .then(r => r.json())
+    .then(list => render(list.filter(a => a && a.id && a.name)))
+    .catch(() => { $("#home").innerHTML = '<p class="empty">Nepodařilo se načíst apps.json. Zkontroluj, že je to platný JSON (čárky, uvozovky).</p>' });
 
-    let timer = null, fired = false, sx = 0, sy = 0;
-    const cancel = () => { clearTimeout(timer); timer = null; el.classList.remove("pressing") };
-    el.addEventListener("pointerdown", e => {
-      if (e.button !== 0) return;
-      fired = false; sx = e.clientX; sy = e.clientY; el.classList.add("pressing");
-      timer = setTimeout(() => { fired = true; cancel(); try { navigator.vibrate?.(12) } catch {} ; if (canWrite) openPanel(a) }, 520);
-    });
-    el.addEventListener("pointermove", e => { if (timer && Math.hypot(e.clientX - sx, e.clientY - sy) > 10) cancel() });
-    ["pointerup", "pointercancel", "pointerleave"].forEach(t => el.addEventListener(t, cancel));
-    el.addEventListener("contextmenu", e => { e.preventDefault(); cancel(); if (!fired && canWrite && $("#panel").hidden) { fired = true; openPanel(a) } });
-    el.addEventListener("click", e => {
-      if (fired) { e.preventDefault(); fired = false; return }
-      if (page) { e.preventDefault(); openApp(a, page); return }
-      if (!href) { e.preventDefault(); if (canWrite) openPanel(a) }
-    });
-    el.addEventListener("keydown", e => { if ((e.key === "e" || e.key === "E") && canWrite) { e.preventDefault(); openPanel(a) } });
-    return el;
-  }
+  /* ---------- + panel: vygeneruje záznam do apps.json ---------- */
+  let idTouched = false;
+  function openPanel() { $("#panel").reset(); idTouched = false; $("#result").hidden = true; $("#fCopy").hidden = true; $("#fErr").hidden = true; $("#panel").hidden = false; $("#scrim").hidden = false; $("#fName").focus() }
+  function closePanel() { $("#panel").hidden = true; $("#scrim").hidden = true }
+  $("#fName").addEventListener("input", () => { if (!idTouched) $("#fId").value = slug($("#fName").value) });
+  $("#fId").addEventListener("input", () => { idTouched = true });
+  $("#fCancel").onclick = closePanel; $("#scrim").onclick = closePanel;
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#panel").hidden) closePanel() });
 
-  /* ---------- open a copied app inside Appkárna ---------- */
-  function openApp(a, page) {
-    $("#avTitle").textContent = a.name; $("#avFrame").src = page;
-    $("#appView").hidden = false; document.body.style.overflow = "hidden"; $("#avBack").focus();
-  }
-  function closeApp() { $("#appView").hidden = true; $("#avFrame").src = "about:blank"; document.body.style.overflow = "" }
-  $("#avBack").onclick = closeApp;
-
-  /* ---------- Claude logo ---------- */
-  function cleanSvg(text) {
-    const m = (text || "").match(/<svg[\s\S]*<\/svg>/i); if (!m) return "";
-    const doc = new DOMParser().parseFromString(m[0], "image/svg+xml");
-    const svg = doc.documentElement;
-    if (!svg || svg.nodeName.toLowerCase() !== "svg" || doc.querySelector("parsererror")) return "";
-    doc.querySelectorAll("script,foreignObject,image,iframe,a").forEach(n => n.remove());
-    doc.querySelectorAll("*").forEach(n => [...n.attributes].forEach(at => {
-      const v = at.value.trim().toLowerCase();
-      if (/^on/i.test(at.name) || ((at.name === "href" || at.name.endsWith(":href")) && !v.startsWith("#"))) n.removeAttribute(at.name);
-    }));
-    if (!svg.getAttribute("viewBox")) svg.setAttribute("viewBox", "0 0 512 512");
-    svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-    svg.removeAttribute("width"); svg.removeAttribute("height");
-    svg.setAttribute("preserveAspectRatio", "xMidYMid slice");
-    const out = new XMLSerializer().serializeToString(svg);
-    return out.length < 120000 ? out : "";
-  }
-  function logoPrompt(name, desc, idea) {
-    return `Navrhni ikonu mobilní aplikace jako jeden SVG soubor.
-
-Appka: ${name}
-Co dělá: ${desc || "(bez popisu, vycházej z názvu)"}
-${idea ? "Představa autora: " + idea + "\n" : ""}
-Pravidla:
-- viewBox="0 0 512 512", bez width a height.
-- Pozadí vyplní CELÝ čtverec (rect x=0 y=0 width=512 height=512, bez zaoblení). Rohy zaoblí tlačítko samo.
-- Jeden výrazný, jednoduchý symbol, který vystihuje právě tuhle appku a je čitelný i v 60 px. Žádné drobné detaily.
-- Nanejvýš 4 barvy, gradienty jsou v pořádku (linearGradient/radialGradient v defs). Barvy vyber podle tématu appky, ne obecný fialovo-modrý gradient.
-- Žádný text, písmena ani číslice, pokud je autor výslovně nechce.
-- Žádné <script>, <foreignObject>, <image>, <style>, externí odkazy ani fonty. Každý tvar má vlastní atribut fill.
-Odpověz POUZE kódem SVG, bez markdownu a bez komentářů.`;
-  }
-  async function askLogo(name, desc, idea) {
-    if (!sample || !canSample) throw { code: "not_granted" };
-    const { text } = await sample(logoPrompt(name, desc, idea), { cache: false });
-    const svg = cleanSvg(text); if (!svg) throw { code: "bad_svg" };
-    return svg;
-  }
-  function genErr(e) {
-    if (["not_granted", "sampling_disabled", "not_declared", "capability_disabled", "capability_removed"].includes(e?.code)) { canSample = false; syncGenBtn(); return "Kreslení loga od Clauda není povolené. Můžeš nahrát vlastní obrázek." }
-    if (e?.code === "rate_limited") return "Claude má teď moc práce nebo jsi narazil na limit. Zkus to za chvíli.";
-    if (e?.code === "bad_svg" || e?.code === "refused" || e?.code === "empty_completion") return "Tohle logo se nepovedlo. Zkus to znovu, případně uprav představu.";
-    return "Logo se nepodařilo nakreslit. Zkus to znovu.";
-  }
-  async function genInBackground(id, name, desc, idea) {
-    if (!sample || !canSample) return;
-    generating.add(id); render();
-    try { const svg = await askLogo(name, desc, idea); await db.doc("apps/" + id).update({ logoSvg: svg, updatedAt: Date.now() }) }
-    catch (e) { if (e?.code !== "cancelled") note(genErr(e)) }
-    finally { generating.delete(id); render() }
-  }
-
-  /* ---------- edit sheet ---------- */
-  function syncGenBtn() { $("#genBtn").hidden = !sample || !canSample; $("#uplBtn").hidden = !assets }
-  function syncLogo() { paintIcon($("#logoPrev"), null, form); $("#logoRm").hidden = !(form.logo || form.logoSvg) }
-  function syncHint() { $("#fShareHint").hidden = !isClaude($("#fUrl").value.trim()) }
-  function setBusy(d, msg) { busy += d; $("#fSave").disabled = busy > 0; $("#genBtn").disabled = busy > 0; const g = $("#genMsg"); g.hidden = !msg; g.textContent = msg || "" }
-
-  function openPanel(a) {
-    if (!canWrite) return;
-    editId = a ? a.id : null; editApp = a; armed = false;
-    $("#pTitle").textContent = a ? "Upravit appku" : "Nová appka";
-    $("#fName").value = a?.name || ""; $("#fUrl").value = a?.url || ""; $("#fDesc").value = a?.desc || "";
-    $("#fIdea").value = a?.logoIdea || "";
-    form = { logo: a?.logo || "", logoSvg: a?.logoSvg || "" }; fresh = new Set();
-    $("#fDel").hidden = !a; $("#fDel").className = "del"; $("#fDel").textContent = "Smazat";
-    $("#fErr").hidden = true; $("#genMsg").hidden = true;
-    const isCopy = !!pageOf(a); $("#fCopyHint").hidden = !isCopy; $("#fUrlWrap").hidden = isCopy;
-    syncLogo(); syncHint(); syncGenBtn(); if (isCopy) $("#fShareHint").hidden = true;
-    $("#panel").hidden = false; $("#scrim").hidden = false; $("#fName").focus();
-  }
-  function closePanel(discard = true) {
-    if (discard && assets) fresh.forEach(id => assets.delete(id).catch(() => {}));
-    fresh = new Set(); $("#panel").hidden = true; $("#scrim").hidden = true; editId = null; editApp = null;
-  }
-
-  $("#genBtn").onclick = async () => {
-    const name = $("#fName").value.trim();
-    if (!name) { $("#fErr").textContent = "Nejdřív napiš název appky."; $("#fErr").hidden = false; return }
-    $("#fErr").hidden = true; setBusy(1, "Claude kreslí logo… chvilku to trvá."); $("#logoPrev").classList.add("gen");
-    try { form.logoSvg = await askLogo(name, $("#fDesc").value.trim(), $("#fIdea").value.trim()); form.logo = ""; syncLogo(); setBusy(-1, "Hotovo. Nelíbí se? Klikni znovu.") }
-    catch (e) { setBusy(-1, ""); $("#fErr").textContent = genErr(e); $("#fErr").hidden = false }
-    finally { $("#logoPrev").classList.remove("gen") }
-  };
-  $("#fLogo").onchange = async e => {
-    const f = e.target.files[0]; e.target.value = ""; if (!f || !assets) return;
-    $("#fErr").hidden = true; setBusy(1, "Nahrávám logo…");
-    try { const r = await assets.upload(f); fresh.add(r.id); form.logo = r.id; syncLogo(); setBusy(-1, "") }
-    catch (er) {
-      setBusy(-1, "");
-      const m = { too_large: "Obrázek je moc velký (max 20 MB, SVG 2 MB).", unsupported_type: "Tenhle formát nejde. Použij PNG, JPG, WEBP nebo SVG.", quota_or_state: "Místo na obrázky je plné." };
-      $("#fErr").textContent = m[er?.code] || "Logo se nepodařilo nahrát. Zkus to znovu."; $("#fErr").hidden = false;
-    }
-  };
-  $("#logoRm").onclick = () => { form.logo = ""; form.logoSvg = ""; syncLogo() };
-  $("#fName").addEventListener("input", () => { if (!form.logo && !form.logoSvg) syncLogo() });
-  $("#fUrl").addEventListener("input", syncHint);
-
-  function errText(e) {
-    if (e?.code === "invalid_argument") { canWrite = false; render(); return "Nemáš práva zapisovat. Požádej majitele, ať tě přidá jako Editora." }
-    if (e?.code === "quota_exceeded") return "Úložiště je plné. Smaž nějakou starou appku.";
-    return "Uložení se nepovedlo. Zkus to za chvíli znovu.";
-  }
-
-  $("#panel").addEventListener("submit", async ev => {
-    ev.preventDefault(); if (busy) return;
-    const name = $("#fName").value.trim();
-    if (!name) { $("#fErr").textContent = "Doplň název appky."; $("#fErr").hidden = false; return }
-    const url = $("#fUrl").value.trim();
-    if (url && !safeUrl(url)) { $("#fErr").textContent = "Odkaz musí začínat https://"; $("#fErr").hidden = false; return }
-    const desc = $("#fDesc").value.trim(), idea = $("#fIdea").value.trim();
-    const body = { name, url, desc, logoIdea: idea, logo: form.logo, logoSvg: form.logoSvg, updatedAt: Date.now() };
-    const prev = editApp;
-    $("#fSave").disabled = true;
-    try {
-      let id = editId;
-      if (id) await db.doc("apps/" + id).update(body);
-      else { const uid = user ? await user.id() : null; const ref = await db.collection("apps").add({ ...body, createdAt: Date.now(), addedBy: uid || "" }); id = ref.id }
-      if (assets) [prev?.logo, ...fresh].filter(x => x && x !== form.logo).forEach(x => assets.delete(x).catch(() => {}));
-      closePanel(false);
-      if (!form.logo && !form.logoSvg) genInBackground(id, name, desc, idea);
-    } catch (e) { $("#fErr").textContent = errText(e); $("#fErr").hidden = false }
-    finally { $("#fSave").disabled = busy > 0 }
+  $("#panel").addEventListener("submit", e => {
+    e.preventDefault();
+    const name = $("#fName").value.trim(), id = slug($("#fId").value || name);
+    if (!name || !id) { $("#fErr").textContent = "Doplň název appky."; $("#fErr").hidden = false; return }
+    $("#fErr").hidden = true;
+    const video = $("#fVideo").value.trim() || "video.mp4";
+    const entry = { id, name, desc: $("#fDesc").value.trim(), url: $("#fUrl").value.trim(), logo: "logo.png", mobile: "mobil.png", desktop: "pc.png", video };
+    $("#outJson").textContent = JSON.stringify(entry, null, 2);
+    const files = ["logo.png", "mobil.png", "pc.png"].concat(/^https?:/.test(video) ? [] : [video]);
+    $("#outFiles").innerHTML = `<b>2.</b> Na GitHubu vytvoř složku <code>apps/${id}/</code> a nahraj do ní: ` + files.map(f => `<code>${f}</code>`).join(", ") + ".";
+    $("#result").hidden = false; $("#fCopy").hidden = false; $("#fCopy").textContent = "Zkopírovat";
   });
-
-  $("#fDel").onclick = async () => {
-    if (!armed) { armed = true; $("#fDel").classList.add("armed"); $("#fDel").textContent = "Opravdu smazat?"; return }
-    const a = editApp; if (!a) return;
-    try { await db.doc("apps/" + a.id).delete(); if (assets && a.logo) assets.delete(a.logo).catch(() => {}); closePanel() }
-    catch (e) { $("#fErr").textContent = errText(e); $("#fErr").hidden = false }
+  $("#fCopy").onclick = async () => {
+    try { await navigator.clipboard.writeText($("#outJson").textContent); $("#fCopy").textContent = "Zkopírováno ✓" }
+    catch { $("#fCopy").textContent = "Označ a zkopíruj ručně" }
   };
-  $("#fCancel").onclick = () => closePanel(); $("#scrim").onclick = () => closePanel();
-  document.addEventListener("keydown", e => { if (e.key !== "Escape") return; if (!$("#panel").hidden) closePanel(); else if (!$("#appView").hidden) closeApp() });
-
-  (async () => {
-    const [d, u, as, sm] = await Promise.all(["db", "user", "assets", "sample"].map(n => claude.use(n)));
-    db = d; user = u; assets = as; sample = sm;
-    if (!db) { render(); return }
-    if (user) { try { if (await user.can("data.write") === false) { canWrite = false; note("Můžeš appky otevírat. Pro přidávání a úpravy tě musí majitel pozvat jako Editora.") } } catch {} }
-    let tries = 0, unsub = null;
-    const listen = () => {
-      unsub = db.collection("apps").orderBy("createdAt", "asc").onSnapshot(s => {
-        tries = 0; note(""); apps = s.docs.map(x => ({ id: x.id, ...x.data() })); render();
-      }, e => {
-        if (e?.code === "revoked") { note("Přístup k Appkárně se změnil. Zavři ji a otevři znovu."); return }
-        if (tries < 5) { tries++; setTimeout(listen, 800 * tries + Math.random() * 400) }
-        else note("Spojení se ztratilo. Zavři Appkárnu a otevři ji znovu.");
-      });
-    };
-    listen();
-    document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible" && tries >= 5) { tries = 0; listen() } });
-  })();
 })();
 </script>
-
-</body></html>
+</body>
+</html>

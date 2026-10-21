@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Appka · Ralex S.R.O</title>
+<meta name="theme-color" content="#0C0D11">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <a class="btn" href="./">← Ralex S.R.O</a>
+  <span class="title" id="topTitle"></span>
+</div>
+
+<main class="wrap" id="main">
+  <p class="empty" id="loading">Načítám appku…</p>
+
+  <section id="content" hidden>
+    <div class="hero">
+      <div class="icon" id="logo"></div>
+      <div>
+        <h1 id="name"></h1>
+        <p id="desc"></p>
+        <a class="btn btn-accent" id="open" target="_blank" rel="noopener" hidden>Otevřít appku ↗</a>
+      </div>
+    </div>
+
+    <div class="sec-h"><h2>Jak to vypadá</h2><span>mobil · počítač</span></div>
+    <div class="shots">
+      <figure class="shot">
+        <div class="phone"><div class="screen" id="mobile"></div></div>
+        <figcaption><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="1.5" width="8" height="13" rx="2"/><path d="M7 12.5h2"/></svg>Na mobilu</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="browser"><div class="chrome"><i></i><i></i><i></i><span id="urlbar"></span></div><div class="screen" id="desktop"></div></div>
+        <figcaption><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5"/><path d="M5.5 14h5M8 11.5V14"/></svg>Na počítači</figcaption>
+      </figure>
+    </div>
+
+    <div class="sec-h"><h2>V praxi</h2><span>video</span></div>
+    <div class="video" id="video"></div>
+  </section>
+</main>
+
+<script>
+(() => {
+  const $ = s => document.querySelector(s);
+  const id = new URLSearchParams(location.search).get("id") || "";
+  const hue = s => { let h = 0; for (const c of s) h = (h * 31 + c.codePointAt(0)) % 360; return h };
+  const initials = n => (n || "").trim().split(/\s+/).slice(0, 2).map(w => w[0]).join("").toUpperCase() || "?";
+  const isUrl = s => /^https?:\/\//i.test(s || "");
+  const path = (a, f) => isUrl(f) ? f : `apps/${a.id}/${f}`;
+
+  function placeholder(box, file, a) {
+    const d = document.createElement("div"); d.className = "ph";
+    d.innerHTML = `<span>Zatím tu nic není.</span><span>Nahraj <code></code></span>`;
+    d.querySelector("code").textContent = `apps/${a.id}/${file || "…"}`;
+    box.replaceChildren(d);
+  }
+  function image(box, file, a, alt) {
+    if (!file) return placeholder(box, file, a);
+    const im = new Image(); im.alt = alt; im.loading = "lazy"; im.src = path(a, file);
+    im.onerror = () => placeholder(box, file, a); box.replaceChildren(im);
+  }
+  function youtubeId(u) {
+    const m = (u || "").match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/); return m ? m[1] : "";
+  }
+  function video(box, file, a) {
+    if (!file) return placeholder(box, "video.mp4", a);
+    const yt = youtubeId(file);
+    if (yt) {
+      const f = document.createElement("iframe"); f.src = `https://www.youtube-nocookie.com/embed/${yt}?rel=0`; f.title = a.name + " v praxi";
+      f.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"; f.allowFullScreen = true;
+      return box.replaceChildren(f);
+    }
+    const v = document.createElement("video"); v.controls = true; v.playsInline = true; v.preload = "metadata";
+    v.src = path(a, file);
+    v.onerror = () => placeholder(box, file, a); box.replaceChildren(v);
+  }
+
+  function show(a) {
+    document.title = a.name + " · Ralex S.R.O";
+    $("#topTitle").textContent = a.name; $("#name").textContent = a.name;
+    $("#desc").textContent = a.desc || ""; $("#desc").hidden = !a.desc;
+    const logo = $("#logo");
+    const fb = () => { logo.replaceChildren(initials(a.name)); logo.style.background = `linear-gradient(145deg, oklch(0.66 0.16 ${hue(a.name)}), oklch(0.46 0.15 ${(hue(a.name) + 40) % 360}))` };
+    if (a.logo) { const im = new Image(); im.alt = ""; im.src = path(a, a.logo); im.onerror = fb; logo.replaceChildren(im) } else fb();
+    if (isUrl(a.url)) { $("#open").href = a.url; $("#open").hidden = false; $("#urlbar").textContent = a.url.replace(/^https?:\/\//, "") }
+    else $("#urlbar").textContent = a.name;
+    image($("#mobile"), a.mobile, a, a.name + " na mobilu");
+    image($("#desktop"), a.desktop, a, a.name + " na počítači");
+    video($("#video"), a.video, a);
+    $("#loading").hidden = true; $("#content").hidden = false;
+  }
+
+  fetch("apps.json", { cache: "no-store" })
+    .then(r => r.json())
+    .then(list => {
+      const a = list.find(x => x && x.id === id);
+      if (!a) { $("#loading").textContent = "Tahle appka neexistuje. Vrať se zpátky na přehled."; return }
+      show(a);
+    })
+    .catch(() => { $("#loading").textContent = "Nepodařilo se načíst apps.json." });
+})();
+</script>
+</body>
+</html>
