@@ -8,5 +8,15 @@
     "mobile": "mobil.png",
     "desktop": "pc.png",
     "video": "video.mp4"
+  },
+  {
+    "id": "rozvozka",
+    "name": "Rozvozka",
+    "desc": "púro pepu",
+    "url": "https://vysleuzilek.github.io/rozvoz_app/",
+    "logo": "logo.png",
+    "mobile": "mobil.png",
+    "desktop": "pc.png",
+    "video": "video.mp4"
   }
 ]
