@@ -18,5 +18,16 @@
     "mobile": "",
     "desktop": "",
     "video": ""
+  },
+  {
+    "id": "rozvozka-2",
+    "name": "Rozvozka",
+    "desc": "pro pepu",
+    "url": "https://vysleuzilek.github.io/rozvoz_app/",
+    "logo": "logo.jpg",
+    "mobile": "mobil.jpg",
+    "desktop": "pc.png",
+    "video": "video.mp4",
+    "v": 1792616532833
   }
 ]
