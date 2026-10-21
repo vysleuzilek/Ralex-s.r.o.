@@ -1,15 +1,5 @@
 [
   {
-    "id": "rozvozka",
-    "name": "Rozvozka",
-    "desc": "púro pepu",
-    "url": "https://vysleuzilek.github.io/rozvoz_app/",
-    "logo": "",
-    "mobile": "",
-    "desktop": "",
-    "video": ""
-  },
-  {
     "id": "rozvozka-2",
     "name": "Rozvozka",
     "desc": "pro pepu",
