@@ -5,18 +5,18 @@
     "desc": "Přehled všech našich byznysů, nápadů a úkolů na jednom místě.",
     "url": "",
     "logo": "logo.svg",
-    "mobile": "mobil.png",
-    "desktop": "pc.png",
-    "video": "video.mp4"
+    "mobile": "",
+    "desktop": "",
+    "video": ""
   },
   {
     "id": "rozvozka",
     "name": "Rozvozka",
     "desc": "púro pepu",
     "url": "https://vysleuzilek.github.io/rozvoz_app/",
-    "logo": "logo.png",
-    "mobile": "mobil.png",
-    "desktop": "pc.png",
-    "video": "video.mp4"
+    "logo": "",
+    "mobile": "",
+    "desktop": "",
+    "video": ""
   }
 ]

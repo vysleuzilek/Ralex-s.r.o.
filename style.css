@@ -139,3 +139,39 @@ textarea { min-height: 76px; resize: vertical }
 .video { width: 100%; border-radius: 22px; overflow: hidden; border: 1px solid var(--line-2); background: #000; box-shadow: var(--shadow-lg); aspect-ratio: 16 / 9 }
 .video video, .video iframe { width: 100%; height: 100%; display: block; border: 0; background: #000 }
 .video .ph { background: var(--surface-2) }
+
+/* nahrávání médií */
+.media { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px }
+.pick { position: relative; display: grid; gap: 6px; font-size: 12px; color: var(--muted); font-weight: 500; cursor: pointer }
+.pick .box { position: relative; border-radius: 14px; overflow: hidden; border: 1.5px dashed var(--line-2); background: var(--surface-2); display: grid; place-items: center;
+  color: var(--muted); font-size: 22px; transition: border-color .15s, background-color .15s }
+.pick:hover .box, .pick:focus-within .box { border-color: var(--accent); background: var(--accent-soft); color: var(--accent) }
+.pick .box.has { border-style: solid; border-color: var(--line) }
+.pick .box img, .pick .box video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top }
+.pick input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none }
+.pick.sq .box { aspect-ratio: 1 }
+.pick.mob .box { aspect-ratio: 9 / 16 }
+.pick.pc .box { aspect-ratio: 16 / 10 }
+.pick.vid .box { aspect-ratio: 16 / 9 }
+.pick .new { position: absolute; top: 6px; left: 6px; z-index: 1; font: 600 10px var(--f-body); background: var(--accent); color: var(--accent-ink); border-radius: 999px; padding: 2px 7px }
+.vidrow { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 12px; align-items: end }
+@media (max-width: 420px) { .vidrow { grid-template-columns: 1fr } }
+.vidrow .or { font-size: 12px; color: var(--muted) }
+.prog { height: 6px; border-radius: 999px; background: var(--surface-2); overflow: hidden }
+.prog i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s ease }
+.ok { color: #4ADE80; font-size: 13px; margin: 0 }
+.gh { display: grid; gap: 12px; padding: 14px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface-2) }
+.gh h3 { margin: 0; font-family: var(--f-display); font-size: 16px; letter-spacing: -.02em }
+.gh ol { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 13.5px; color: var(--ink) }
+.gh a { color: var(--accent) }
+.gh input { background: var(--surface) }
+.del { margin-left: auto; background: none; border: 1px solid transparent; color: var(--danger); font: 500 13px var(--f-body); padding: 8px 14px; border-radius: 999px; cursor: pointer }
+.del:hover { background: var(--surface-2) }
+.del.armed { border-color: var(--danger) }
+.tile.pressing .icon { transform: scale(.95); transition: transform .5s cubic-bezier(.2,.7,.2,1) }
+.tile { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; touch-action: manipulation }
+.linkbtn { background: none; border: 0; color: var(--muted); font: 500 13px var(--f-body); cursor: pointer; padding: 0; text-decoration: underline }
+.btn-sm { font-size: 13px; padding: 8px 14px }
+.media, .vidrow .pick { align-items: start } .pick { align-content: start }
+.pick .box { width: 100% } .pick { justify-items: stretch; grid-template-rows: auto auto }
+.panel label.pick { display: flex; flex-direction: column; gap: 6px } .pick .box { flex: none; height: auto }

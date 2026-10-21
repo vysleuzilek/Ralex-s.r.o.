@@ -26,7 +26,7 @@
       <div>
         <h1 id="name"></h1>
         <p id="desc"></p>
-        <a class="btn btn-accent" id="open" target="_blank" rel="noopener" hidden>Otevřít appku ↗</a>
+        <div style="display:flex;flex-wrap:wrap;gap:10px"><a class="btn btn-accent" id="open" target="_blank" rel="noopener" hidden>Otevřít appku ↗</a><a class="btn" id="edit" hidden>Upravit</a></div>
       </div>
     </div>
 
@@ -47,40 +47,38 @@
   </section>
 </main>
 
+<script src="gh.js"></script>
 <script>
 (() => {
   const $ = s => document.querySelector(s);
   const id = new URLSearchParams(location.search).get("id") || "";
   const hue = s => { let h = 0; for (const c of s) h = (h * 31 + c.codePointAt(0)) % 360; return h };
   const initials = n => (n || "").trim().split(/\s+/).slice(0, 2).map(w => w[0]).join("").toUpperCase() || "?";
-  const isUrl = s => /^https?:\/\//i.test(s || "");
-  const path = (a, f) => isUrl(f) ? f : `apps/${a.id}/${f}`;
+  const ytId = u => ((u || "").match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/) || [])[1] || "";
 
-  function placeholder(box, file, a) {
+  function placeholder(box, what) {
     const d = document.createElement("div"); d.className = "ph";
-    d.innerHTML = `<span>Zatím tu nic není.</span><span>Nahraj <code></code></span>`;
-    d.querySelector("code").textContent = `apps/${a.id}/${file || "…"}`;
+    d.innerHTML = '<span>Zatím tu nic není.</span><span></span>';
+    d.lastChild.textContent = `Přidej ${what} přes „Upravit“.`;
     box.replaceChildren(d);
   }
-  function image(box, file, a, alt) {
-    if (!file) return placeholder(box, file, a);
-    const im = new Image(); im.alt = alt; im.loading = "lazy"; im.src = path(a, file);
-    im.onerror = () => placeholder(box, file, a); box.replaceChildren(im);
+  function image(box, a, k, alt, what) {
+    if (!a[k]) return placeholder(box, what);
+    box.replaceChildren(RALEX.img(a, a[k], alt, () => placeholder(box, what)));
   }
-  function youtubeId(u) {
-    const m = (u || "").match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/); return m ? m[1] : "";
-  }
-  function video(box, file, a) {
-    if (!file) return placeholder(box, "video.mp4", a);
-    const yt = youtubeId(file);
+  function video(box, a) {
+    const f = a.video;
+    if (!f) return placeholder(box, "video");
+    const yt = ytId(f);
     if (yt) {
-      const f = document.createElement("iframe"); f.src = `https://www.youtube-nocookie.com/embed/${yt}?rel=0`; f.title = a.name + " v praxi";
-      f.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"; f.allowFullScreen = true;
-      return box.replaceChildren(f);
+      const fr = document.createElement("iframe"); fr.src = `https://www.youtube-nocookie.com/embed/${yt}?rel=0`; fr.title = a.name + " v praxi";
+      fr.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"; fr.allowFullScreen = true;
+      return box.replaceChildren(fr);
     }
     const v = document.createElement("video"); v.controls = true; v.playsInline = true; v.preload = "metadata";
-    v.src = path(a, file);
-    v.onerror = () => placeholder(box, file, a); box.replaceChildren(v);
+    let tried = false;
+    v.onerror = () => { if (!tried) { tried = true; v.src = RALEX.raw(a, f) } else placeholder(box, "video") };
+    v.src = RALEX.src(a, f); box.replaceChildren(v);
   }
 
   function show(a) {
@@ -89,23 +87,19 @@
     $("#desc").textContent = a.desc || ""; $("#desc").hidden = !a.desc;
     const logo = $("#logo");
     const fb = () => { logo.replaceChildren(initials(a.name)); logo.style.background = `linear-gradient(145deg, oklch(0.66 0.16 ${hue(a.name)}), oklch(0.46 0.15 ${(hue(a.name) + 40) % 360}))` };
-    if (a.logo) { const im = new Image(); im.alt = ""; im.src = path(a, a.logo); im.onerror = fb; logo.replaceChildren(im) } else fb();
-    if (isUrl(a.url)) { $("#open").href = a.url; $("#open").hidden = false; $("#urlbar").textContent = a.url.replace(/^https?:\/\//, "") }
+    if (a.logo) logo.replaceChildren(RALEX.img(a, a.logo, "", fb)); else fb();
+    if (RALEX.isUrl(a.url)) { $("#open").href = a.url; $("#open").hidden = false; $("#urlbar").textContent = a.url.replace(/^https?:\/\//, "") }
     else $("#urlbar").textContent = a.name;
-    image($("#mobile"), a.mobile, a, a.name + " na mobilu");
-    image($("#desktop"), a.desktop, a, a.name + " na počítači");
-    video($("#video"), a.video, a);
+    $("#edit").href = "./#edit=" + encodeURIComponent(a.id); $("#edit").hidden = false;
+    image($("#mobile"), a, "mobile", a.name + " na mobilu", "fotku z mobilu");
+    image($("#desktop"), a, "desktop", a.name + " na počítači", "fotku z PC");
+    video($("#video"), a);
     $("#loading").hidden = true; $("#content").hidden = false;
   }
 
-  fetch("apps.json", { cache: "no-store" })
-    .then(r => r.json())
-    .then(list => {
-      const a = list.find(x => x && x.id === id);
-      if (!a) { $("#loading").textContent = "Tahle appka neexistuje. Vrať se zpátky na přehled."; return }
-      show(a);
-    })
-    .catch(() => { $("#loading").textContent = "Nepodařilo se načíst apps.json." });
+  RALEX.loadApps()
+    .then(list => { const a = list.find(x => x.id === id); if (!a) { $("#loading").textContent = "Tahle appka neexistuje. Vrať se zpátky na přehled."; return } show(a) })
+    .catch(() => { $("#loading").textContent = "Nepodařilo se načíst appky." });
 })();
 </script>
 </body>

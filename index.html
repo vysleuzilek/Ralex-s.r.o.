@@ -22,11 +22,12 @@
     <details class="how">
       <summary aria-label="Jak to funguje"><svg class="info" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="var(--accent)"/><rect x="9" y="8.5" width="2" height="6.5" rx="1" fill="var(--accent-ink)"/><circle cx="10" cy="5.8" r="1.25" fill="var(--accent-ink)"/></svg><span>Jak to funguje</span><span class="x" aria-hidden="true">×</span></summary>
       <ul>
-        <li><b>Klik na appku</b> — otevře její stránku: mobil, PC a video z praxe.</li>
-        <li><b>Tlačítko +</b> — vyplníš appku a stránka ti vygeneruje řádek do <code>apps.json</code>.</li>
-        <li class="sep"><b>Soubory:</b> do složky <code>apps/název/</code> nahraj <code>logo.png</code>, <code>mobil.png</code>, <code>pc.png</code> a <code>video.mp4</code>.</li>
-        <li><b>Video:</b> MP4 do 100 MB, nebo odkaz na YouTube.</li>
-        <li><b>Změny:</b> po commitu na GitHub se web aktualizuje do minuty.</li>
+        <li><b>Klik</b> — otevře stránku appky: mobil, PC a video z praxe.</li>
+        <li><b>Podržení</b> (na PC pravé tlačítko) — úprava appky.</li>
+        <li><b>Tlačítko +</b> — nová appka. Fotky a video vybereš rovnou z mobilu nebo PC.</li>
+        <li class="sep"><b>Ukládání:</b> všechno se uloží do GitHub repa, web se obnoví do minuty.</li>
+        <li><b>Video:</b> max 95 MB, delší dej na YouTube a vlož odkaz.</li>
+        <li id="ghState"></li>
       </ul>
     </details>
   </header>
@@ -35,82 +36,226 @@
 
 <div class="scrim" id="scrim" hidden></div>
 <form class="panel" id="panel" hidden autocomplete="off">
-  <h2>Nová appka</h2>
-  <label for="fName">Název<input id="fName" required maxlength="40" placeholder="Např. Hustle HQ"></label>
-  <label for="fId">Složka <small>malá písmena a pomlčky, vyplní se samo</small><input id="fId" maxlength="40" pattern="[a-z0-9-]+" placeholder="hustle-hq"></label>
-  <label for="fUrl">Odkaz na appku <small>kam vede tlačítko „Otevřít appku“</small><input id="fUrl" type="url" placeholder="https://…"></label>
-  <label for="fDesc">Co to dělá<textarea id="fDesc" maxlength="300" placeholder="Pro koho to je a co to řeší."></textarea></label>
-  <label for="fVideo">Video <small>nech prázdné = video.mp4 ve složce, nebo vlož YouTube odkaz</small><input id="fVideo" placeholder="video.mp4"></label>
-  <p class="err" id="fErr" hidden></p>
-  <div id="result" hidden style="display:grid;gap:12px">
-    <p class="hint"><b>1.</b> Tenhle blok vlož do <code>apps.json</code> (mezi <code>[ ]</code>, odděl čárkou od ostatních):</p>
-    <pre class="out" id="outJson"></pre>
-    <p class="hint" id="outFiles"></p>
+  <h2 id="pTitle">Nová appka</h2>
+
+  <!-- připojení GitHubu (jen poprvé) -->
+  <div class="gh" id="ghBox" hidden>
+    <h3>Připoj GitHub (jen jednou)</h3>
+    <ol>
+      <li>Otevři <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">nový token na GitHubu</a>.</li>
+      <li>Název třeba „Ralex web“, Expiration: <b>No expiration</b> nebo 1 rok.</li>
+      <li>Repository access → <b>Only select repositories</b> → vyber <b id="ghRepo"></b>.</li>
+      <li>Permissions → Repository → <b>Contents: Read and write</b>.</li>
+      <li>Generate token, zkopíruj ho a vlož sem.</li>
+    </ol>
+    <input id="ghToken" placeholder="github_pat_…" autocomplete="off" spellcheck="false">
+    <p class="err" id="ghErr" hidden></p>
+    <div><button type="button" class="btn btn-primary btn-sm" id="ghSave">Připojit</button></div>
   </div>
+
+  <div id="fields" style="display:grid;gap:14px">
+    <label for="fName">Název<input id="fName" maxlength="40" placeholder="Např. Rozvozka"></label>
+    <label for="fUrl">Odkaz na appku <small>kam vede tlačítko „Otevřít appku“</small><input id="fUrl" type="url" placeholder="https://…"></label>
+    <label for="fDesc">Co to dělá<textarea id="fDesc" maxlength="300" placeholder="Pro koho to je a co to řeší."></textarea></label>
+
+    <div class="media">
+      <label class="pick sq" data-k="logo">Logo<div class="box">+</div><input type="file" accept="image/*"></label>
+      <label class="pick mob" data-k="mobile">Fotka z mobilu<div class="box">+</div><input type="file" accept="image/*"></label>
+      <label class="pick pc" data-k="desktop">Fotka z PC<div class="box">+</div><input type="file" accept="image/*"></label>
+    </div>
+
+    <div class="vidrow">
+      <label class="pick vid" data-k="video">Video<div class="box">+</div><input type="file" accept="video/*"></label>
+      <label for="fYt">nebo YouTube odkaz<input id="fYt" placeholder="https://youtu.be/…"></label>
+    </div>
+  </div>
+
+  <div id="progWrap" hidden style="display:grid;gap:6px"><div class="prog"><i id="progBar"></i></div><p class="genmsg" id="progTxt" style="margin:0;font-size:12px;color:var(--muted)"></p></div>
+  <p class="err" id="fErr" hidden></p>
+  <p class="ok" id="fOk" hidden></p>
   <div class="foot">
-    <button type="submit" class="btn btn-primary" id="fGen">Vygenerovat</button>
-    <button type="button" class="btn" id="fCopy" hidden>Zkopírovat</button>
+    <button type="submit" class="btn btn-primary" id="fSave">Uložit</button>
     <button type="button" class="btn btn-ghost" id="fCancel">Zavřít</button>
+    <button type="button" class="del" id="fDel" hidden>Smazat</button>
   </div>
 </form>
 
+<script src="gh.js"></script>
 <script>
 (() => {
   const $ = s => document.querySelector(s);
   const hue = s => { let h = 0; for (const c of s) h = (h * 31 + c.codePointAt(0)) % 360; return h };
   const initials = n => (n || "").trim().split(/\s+/).slice(0, 2).map(w => w[0]).join("").toUpperCase() || "?";
-  const slug = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const slug = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "appka";
+  const ytId = u => ((u || "").match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/) || [])[1] || "";
 
-  function paintIcon(box, a) {
-    const fallback = () => { box.replaceChildren(initials(a.name)); box.style.background = `linear-gradient(145deg, oklch(0.66 0.16 ${hue(a.name)}), oklch(0.46 0.15 ${(hue(a.name) + 40) % 360}))` };
-    const src = a.logo ? `apps/${a.id}/${a.logo}` : "";
-    if (!src) return fallback();
-    const im = new Image(); im.alt = ""; im.src = src; im.onerror = fallback; box.replaceChildren(im);
-  }
+  let apps = [], editApp = null, picked = {}, busy = false, armed = false;
 
-  function render(apps) {
+  function fallbackIcon(box, name) { box.replaceChildren(initials(name)); box.style.background = `linear-gradient(145deg, oklch(0.66 0.16 ${hue(name)}), oklch(0.46 0.15 ${(hue(name) + 40) % 360}))` }
+  function paintIcon(box, a) { box.style.background = ""; if (!a.logo) return fallbackIcon(box, a.name); box.replaceChildren(RALEX.img(a, a.logo, "", () => fallbackIcon(box, a.name))) }
+
+  /* ---------- přehled ---------- */
+  function render() {
     const home = $("#home"); home.replaceChildren();
-    for (const a of apps) {
-      const el = document.createElement("a"); el.className = "tile"; el.href = "app.html?id=" + encodeURIComponent(a.id); el.title = a.desc || a.name;
-      const icon = document.createElement("div"); icon.className = "icon"; paintIcon(icon, a);
-      const lab = document.createElement("span"); lab.className = "label"; lab.textContent = a.name;
-      el.append(icon, lab); home.append(el);
-    }
+    for (const a of apps) home.append(tile(a));
     const add = document.createElement("button"); add.type = "button"; add.className = "tile add";
     add.innerHTML = '<div class="icon">+</div><span class="label">Přidat appku</span>';
-    add.onclick = openPanel; home.append(add);
+    add.onclick = () => openPanel(null); home.append(add);
+    $("#ghState").innerHTML = RALEX.token.get() ? '<b>GitHub:</b> připojeno · <button type="button" class="linkbtn" id="ghOut">odpojit</button>' : "<b>GitHub:</b> nepřipojeno — připojíš ho při prvním přidání.";
+    const out = $("#ghOut"); if (out) out.onclick = () => { RALEX.token.set(""); render() };
   }
 
-  fetch("apps.json", { cache: "no-store" })
-    .then(r => r.json())
-    .then(list => render(list.filter(a => a && a.id && a.name)))
-    .catch(() => { $("#home").innerHTML = '<p class="empty">Nepodařilo se načíst apps.json. Zkontroluj, že je to platný JSON (čárky, uvozovky).</p>' });
+  function tile(a) {
+    const el = document.createElement("a"); el.className = "tile"; el.href = "app.html?id=" + encodeURIComponent(a.id); el.title = a.desc || a.name;
+    const icon = document.createElement("div"); icon.className = "icon"; paintIcon(icon, a);
+    const lab = document.createElement("span"); lab.className = "label"; lab.textContent = a.name;
+    el.append(icon, lab);
+    let timer = null, fired = false, sx = 0, sy = 0;
+    const cancel = () => { clearTimeout(timer); timer = null; el.classList.remove("pressing") };
+    el.addEventListener("pointerdown", e => { if (e.button !== 0) return; fired = false; sx = e.clientX; sy = e.clientY; el.classList.add("pressing");
+      timer = setTimeout(() => { fired = true; cancel(); try { navigator.vibrate?.(12) } catch {} openPanel(a) }, 520) });
+    el.addEventListener("pointermove", e => { if (timer && Math.hypot(e.clientX - sx, e.clientY - sy) > 10) cancel() });
+    ["pointerup", "pointercancel", "pointerleave"].forEach(t => el.addEventListener(t, cancel));
+    el.addEventListener("contextmenu", e => { e.preventDefault(); cancel(); if (!fired && $("#panel").hidden) { fired = true; openPanel(a) } });
+    el.addEventListener("click", e => { if (fired) { e.preventDefault(); fired = false } });
+    return el;
+  }
 
-  /* ---------- + panel: vygeneruje záznam do apps.json ---------- */
-  let idTouched = false;
-  function openPanel() { $("#panel").reset(); idTouched = false; $("#result").hidden = true; $("#fCopy").hidden = true; $("#fErr").hidden = true; $("#panel").hidden = false; $("#scrim").hidden = false; $("#fName").focus() }
-  function closePanel() { $("#panel").hidden = true; $("#scrim").hidden = true }
-  $("#fName").addEventListener("input", () => { if (!idTouched) $("#fId").value = slug($("#fName").value) });
-  $("#fId").addEventListener("input", () => { idTouched = true });
+  async function load() {
+    try { apps = await RALEX.loadApps() } catch { $("#home").innerHTML = '<p class="empty">Nepodařilo se načíst appky.</p>'; return }
+    render();
+    const m = location.hash.match(/^#edit=(.+)$/);
+    if (m) { history.replaceState(null, "", location.pathname + location.search); const a = apps.find(x => x.id === decodeURIComponent(m[1])); if (a) openPanel(a) }
+  }
+
+  /* ---------- panel ---------- */
+  function syncGh() { const has = !!RALEX.token.get(); $("#ghBox").hidden = has; $("#fields").style.opacity = has ? "" : ".4"; $("#fields").inert = !has; $("#fSave").disabled = !has || busy }
+  function showPick(k, a) {
+    const p = document.querySelector(`.pick[data-k="${k}"]`), box = p.querySelector(".box");
+    box.replaceChildren(); box.classList.remove("has");
+    const f = picked[k];
+    if (f) {
+      box.classList.add("has");
+      const url = URL.createObjectURL(f);
+      const el = k === "video" ? Object.assign(document.createElement("video"), { src: url, muted: true, playsInline: true }) : Object.assign(new Image(), { src: url });
+      const tag = document.createElement("span"); tag.className = "new"; tag.textContent = "nové";
+      box.append(el, tag); return;
+    }
+    const cur = a && a[k];
+    if (cur && !(k === "video" && RALEX.isUrl(cur))) {
+      box.classList.add("has");
+      if (k === "video") box.append(Object.assign(document.createElement("video"), { src: RALEX.src(a, cur) + "#t=0.5", muted: true, playsInline: true, preload: "metadata" }));
+      else box.append(RALEX.img(a, cur, "", () => { box.classList.remove("has"); box.replaceChildren("+") }));
+      return;
+    }
+    box.textContent = "+";
+  }
+  function openPanel(a) {
+    editApp = a; picked = {}; armed = false;
+    $("#pTitle").textContent = a ? "Upravit appku" : "Nová appka";
+    $("#fName").value = a?.name || ""; $("#fUrl").value = a?.url || ""; $("#fDesc").value = a?.desc || "";
+    $("#fYt").value = a && RALEX.isUrl(a.video) ? a.video : "";
+    ["logo", "mobile", "desktop", "video"].forEach(k => showPick(k, a));
+    $("#fDel").hidden = !a; $("#fDel").className = "del"; $("#fDel").textContent = "Smazat";
+    $("#fErr").hidden = true; $("#fOk").hidden = true; $("#progWrap").hidden = true; $("#ghErr").hidden = true; $("#ghToken").value = "";
+    $("#ghRepo").textContent = RALEX.REPO;
+    syncGh();
+    $("#panel").hidden = false; $("#scrim").hidden = false;
+    (RALEX.token.get() ? $("#fName") : $("#ghToken")).focus();
+  }
+  function closePanel() { if (busy) return; $("#panel").hidden = true; $("#scrim").hidden = true; editApp = null; picked = {} }
   $("#fCancel").onclick = closePanel; $("#scrim").onclick = closePanel;
   document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#panel").hidden) closePanel() });
 
-  $("#panel").addEventListener("submit", e => {
-    e.preventDefault();
-    const name = $("#fName").value.trim(), id = slug($("#fId").value || name);
-    if (!name || !id) { $("#fErr").textContent = "Doplň název appky."; $("#fErr").hidden = false; return }
-    $("#fErr").hidden = true;
-    const video = $("#fVideo").value.trim() || "video.mp4";
-    const entry = { id, name, desc: $("#fDesc").value.trim(), url: $("#fUrl").value.trim(), logo: "logo.png", mobile: "mobil.png", desktop: "pc.png", video };
-    $("#outJson").textContent = JSON.stringify(entry, null, 2);
-    const files = ["logo.png", "mobil.png", "pc.png"].concat(/^https?:/.test(video) ? [] : [video]);
-    $("#outFiles").innerHTML = `<b>2.</b> Na GitHubu vytvoř složku <code>apps/${id}/</code> a nahraj do ní: ` + files.map(f => `<code>${f}</code>`).join(", ") + ".";
-    $("#result").hidden = false; $("#fCopy").hidden = false; $("#fCopy").textContent = "Zkopírovat";
-  });
-  $("#fCopy").onclick = async () => {
-    try { await navigator.clipboard.writeText($("#outJson").textContent); $("#fCopy").textContent = "Zkopírováno ✓" }
-    catch { $("#fCopy").textContent = "Označ a zkopíruj ručně" }
+  document.querySelectorAll(".pick input").forEach(inp => inp.addEventListener("change", () => {
+    const k = inp.closest(".pick").dataset.k, f = inp.files[0]; inp.value = ""; if (!f) return;
+    if (k === "video" && f.size > 95 * 1024 * 1024) { err(`Video má ${(f.size / 1048576).toFixed(0)} MB. GitHub vezme max 95 MB — zkrať ho, nebo dej odkaz na YouTube.`); return }
+    picked[k] = f; if (k === "video") $("#fYt").value = ""; $("#fErr").hidden = true; showPick(k, editApp);
+  }));
+  $("#fYt").addEventListener("input", () => { if ($("#fYt").value.trim() && picked.video) { delete picked.video; showPick("video", editApp) } });
+
+  /* GitHub token */
+  $("#ghSave").onclick = async () => {
+    const t = $("#ghToken").value.trim(); if (!t) return;
+    $("#ghSave").disabled = true; $("#ghErr").hidden = true;
+    try { await RALEX.verify(t); RALEX.token.set(t); syncGh(); render(); $("#fName").focus() }
+    catch (e) { $("#ghErr").textContent = RALEX.errText(e); $("#ghErr").hidden = false }
+    finally { $("#ghSave").disabled = false }
   };
+
+  /* zmenšení velkých fotek, ať je web rychlý */
+  async function prepImage(file, maxDim) {
+    const ext = (file.name.split(".").pop() || "png").toLowerCase().replace("jpeg", "jpg");
+    if (/svg|gif/.test(file.type) || file.size < 900 * 1024) return { blob: file, ext: /^(png|jpg|webp|svg|gif)$/.test(ext) ? ext : "png" };
+    try {
+      const bmp = await createImageBitmap(file);
+      const s = Math.min(1, maxDim / Math.max(bmp.width, bmp.height));
+      const c = document.createElement("canvas"); c.width = Math.round(bmp.width * s); c.height = Math.round(bmp.height * s);
+      c.getContext("2d").drawImage(bmp, 0, 0, c.width, c.height);
+      const blob = await new Promise(r => c.toBlob(r, "image/jpeg", 0.88));
+      if (blob && blob.size < file.size) return { blob, ext: "jpg" };
+    } catch {}
+    return { blob: file, ext: /^(png|jpg|webp)$/.test(ext) ? ext : "png" };
+  }
+
+  function err(t) { $("#fErr").textContent = t; $("#fErr").hidden = false; $("#fOk").hidden = true }
+  function step(n, total, what) { $("#progWrap").hidden = false; $("#progBar").style.width = Math.round((n - 1) / total * 100) + "%"; $("#progTxt").textContent = `Nahrávám ${n}/${total}: ${what}…` }
+
+  $("#panel").addEventListener("submit", async e => {
+    e.preventDefault(); if (busy || !RALEX.token.get()) return;
+    const name = $("#fName").value.trim();
+    if (!name) return err("Doplň název appky.");
+    const url = $("#fUrl").value.trim();
+    if (url && !RALEX.isUrl(url)) return err("Odkaz musí začínat https://");
+    const yt = $("#fYt").value.trim();
+    if (yt && !ytId(yt)) return err("Tohle není YouTube odkaz.");
+
+    let id = editApp ? editApp.id : slug(name);
+    if (!editApp) { let base = id, i = 2; while (apps.some(x => x.id === id)) id = base + "-" + i++ }
+
+    busy = true; syncGh(); $("#fErr").hidden = true; $("#fOk").hidden = true;
+    try {
+      const entry = { id, name, desc: $("#fDesc").value.trim(), url, logo: editApp?.logo || "", mobile: editApp?.mobile || "", desktop: editApp?.desktop || "", video: editApp?.video || "", v: Date.now() };
+      const files = [];
+      const names = { logo: "logo", mobile: "mobil", desktop: "pc", video: "video" };
+      const dims = { logo: 600, mobile: 1400, desktop: 2200 };
+      for (const k of ["logo", "mobile", "desktop", "video"]) {
+        const f = picked[k]; if (!f) continue;
+        let blob = f, ext;
+        if (k === "video") ext = (f.name.split(".").pop() || "mp4").toLowerCase();
+        else ({ blob, ext } = await prepImage(f, dims[k]));
+        entry[k] = `${names[k]}.${ext}`;
+        files.push({ path: `apps/${id}/${entry[k]}`, blob, label: { logo: "logo", mobile: "fotka z mobilu", desktop: "fotka z PC", video: "video" }[k] });
+      }
+      if (yt) entry.video = yt;
+      if (!yt && !picked.video && editApp && RALEX.isUrl(editApp.video) && !$("#fYt").value.trim()) entry.video = "";
+
+      const keep = ["logo", "mobile", "desktop", "video"].map(k => entry[k]).filter(x => x && !RALEX.isUrl(x));
+      apps = await RALEX.commit({
+        message: (editApp ? "Upravit appku " : "Přidat appku ") + name,
+        files, onStep: step,
+        deleteDir: editApp ? id : null, keepFor: keep,
+        mutate: list => { const i = list.findIndex(x => x.id === id); if (i >= 0) list[i] = entry; else list.push(entry); return list }
+      });
+      $("#progBar").style.width = "100%"; $("#progTxt").textContent = "Hotovo.";
+      busy = false; render(); closePanel();
+    } catch (ex) { busy = false; err(RALEX.errText(ex)); $("#progWrap").hidden = true }
+    finally { busy = false; syncGh() }
+  });
+
+  $("#fDel").onclick = async () => {
+    if (!editApp || busy) return;
+    if (!armed) { armed = true; $("#fDel").classList.add("armed"); $("#fDel").textContent = "Opravdu smazat?"; return }
+    busy = true; syncGh(); $("#fDel").disabled = true;
+    try {
+      const id = editApp.id;
+      apps = await RALEX.commit({ message: "Smazat appku " + editApp.name, deleteDir: id, keepFor: [], onStep: step, mutate: list => list.filter(x => x.id !== id) });
+      busy = false; render(); closePanel();
+    } catch (ex) { err(RALEX.errText(ex)) }
+    finally { busy = false; $("#fDel").disabled = false; syncGh() }
+  };
+
+  load();
 })();
 </script>
 </body>
